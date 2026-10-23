@@ -1,3 +1,22 @@
+/* 「赞助维护」弹层：展示微信收款码。 */
+(function () {
+  'use strict';
+  var modal = document.getElementById('sponsor-modal');
+  var openBtn = document.getElementById('sponsor-open');
+  if (!modal || !openBtn) return;
+  var dialog = modal.querySelector('.sponsor-dialog');
+  var closeBtn = document.getElementById('sponsor-close');
+  function open() { modal.hidden = false; document.addEventListener('keydown', onKey); closeBtn.focus(); }
+  function close() { modal.hidden = true; document.removeEventListener('keydown', onKey); openBtn.focus(); }
+  function onKey(e) {
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'Tab') { e.preventDefault(); closeBtn.focus(); }
+  }
+  openBtn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', function (e) { if (!dialog.contains(e.target)) close(); });
+})();
+
 /* 首页：统计和年级入口都从 data/*.json 计算，不写死数量。 */
 (function () {
   'use strict';
@@ -30,7 +49,7 @@
     if (next && next !== href) link.setAttribute('href', next);
   });
   if (subject === 'english') {
-    document.title = '英语 · 中小学知识图谱';
+    document.title = '英语 · 中小学·高中知识图谱';
     var eye = document.querySelector('.eyebrow');
     if (eye) eye.textContent = '英语：三年级到高中';
     var primary = document.querySelector('.hero-actions a.btn-primary');
@@ -43,7 +62,7 @@
       demo.textContent = '先看一遍演示：四年级上册英语';
     }
   } else if (subject === 'physics') {
-    document.title = '物理 · 中小学知识图谱';
+    document.title = '物理 · 中小学·高中知识图谱';
     var peye = document.querySelector('.eyebrow');
     if (peye) peye.textContent = '物理：初中八、九年级 · 高中必修与选择性必修';
     var pprimary = document.querySelector('.hero-actions a.btn-primary');
